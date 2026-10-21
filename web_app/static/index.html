@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Group 16 Academic Research Assistant Team - Production-ready Multi-Agent System with Grounded RAG, Critic Evaluation Gate, Unit-4 Message Contract, and Fault Tolerance.">
+  <title>Group 16 — Academic Research Assistant Team | Multi-Agent Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Top Navigation Header -->
+    <header class="app-header" id="main-header">
+      <div class="brand">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="group-pill" id="group-pill">GROUP 16</span>
+          <h1 class="header-title" id="page-heading">Academic Research Assistant Team</h1>
+        </div>
+      </div>
+      <div class="system-status-badges" id="system-status-badges">
+        <span class="status-chip chip-sk" id="sk-badge">
+          <span class="status-dot"></span> Semantic Kernel 1.45.0
+        </span>
+        <span class="status-chip chip-ft" id="ft-badge">
+          <span class="status-dot"></span> Fault Tolerance &amp; Reassignment
+        </span>
+        <span class="status-chip chip-u4" id="u4-badge">
+          <span class="status-dot"></span> Unit-4 Contract
+        </span>
+      </div>
+    </header>
+
+    <!-- Main Workspace Area -->
+    <main class="main-content" id="main-content">
+      
+      <!-- Query & Controls Section -->
+      <section class="control-card glass-panel" id="query-controls-section">
+        <div class="card-header">
+          <div>
+            <h2 class="section-title">Autonomous Literature Research Console</h2>
+            <p class="section-subtitle">Enter a research prompt to trigger the coordinated 5-agent pipeline</p>
+          </div>
+          <div class="mode-toggle-group">
+            <label class="toggle-label" for="production-mode-toggle">
+              <input type="checkbox" id="production-mode-toggle" checked>
+              <span class="toggle-slider"></span>
+              <span class="toggle-text">Production Mode (Reassignment &amp; Metric Telemetry)</span>
+            </label>
+          </div>
+        </div>
+
+        <form id="research-form" class="query-form" onsubmit="event.preventDefault(); window.runWorkflow();">
+          <div class="input-wrapper">
+            <input 
+              type="text" 
+              id="research-query-input" 
+              class="query-input" 
+              placeholder="e.g. What are benefits and limitations of AI in education?" 
+              value="What are benefits and limitations of AI in education?"
+              required
+            >
+            <button type="submit" id="btn-run-workflow" class="btn btn-primary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              <span>Execute Multi-Agent Run</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Presets Row -->
+        <div class="preset-queries" id="preset-queries-container">
+          <span class="preset-label">Query Presets:</span>
+          <button type="button" class="preset-btn" id="preset-btn-1" onclick="window.setPreset('What are benefits and limitations of AI in education?')">
+            AI in Education (Standard)
+          </button>
+          <button type="button" class="preset-btn" id="preset-btn-2" onclick="window.setPreset('How does ChatGPT enhance student learning and higher-order thinking?')">
+            ChatGPT Student Learning
+          </button>
+          <button type="button" class="preset-btn" id="preset-btn-3" onclick="window.setPreset('What policy and ethical guidance exists for generative AI regulation in schools?')">
+            UNESCO Regulatory Guidance
+          </button>
+          <button type="button" class="preset-btn preset-danger" id="preset-btn-4" onclick="window.setPreset('quantum volcano recipes underwater satellite')">
+            Edge Case: No Evidence (Safe Stop)
+          </button>
+        </div>
+      </section>
+
+      <!-- Live Pipeline Visualizer -->
+      <section class="pipeline-section glass-panel" id="pipeline-visualizer-section">
+        <div class="pipeline-header">
+          <h3 class="pipeline-title">Coordinated Agent Pipeline Architecture</h3>
+          <span class="pipeline-status-text" id="pipeline-status-indicator">Ready to execute</span>
+        </div>
+        
+        <div class="agent-nodes-grid" id="agent-nodes-grid">
+          <!-- Coordinator -->
+          <div class="agent-node" id="node-coordinator">
+            <div class="node-icon coord-icon">⚙️</div>
+            <div class="node-meta">
+              <span class="node-role">Coordinator</span>
+              <span class="node-name">Sequential Coordinator</span>
+            </div>
+            <span class="node-status-pill" id="pill-coordinator">Idle</span>
+          </div>
+
+          <div class="node-connector" id="conn-1">➔</div>
+
+          <!-- Query Agent -->
+          <div class="agent-node" id="node-query">
+            <div class="node-icon query-icon">🔍</div>
+            <div class="node-meta">
+              <span class="node-role">Agent 1</span>
+              <span class="node-name">Query / Planner</span>
+            </div>
+            <span class="node-status-pill" id="pill-query">Idle</span>
+          </div>
+
+          <div class="node-connector" id="conn-2">➔</div>
+
+          <!-- Retrieval Agent -->
+          <div class="agent-node" id="node-retrieval">
+            <div class="node-icon rag-icon">📚</div>
+            <div class="node-meta">
+              <span class="node-role">Agent 2 (RAG)</span>
+              <span class="node-name">Retrieval Agent</span>
+            </div>
+            <span class="node-status-pill" id="pill-retrieval">Idle</span>
+          </div>
+
+          <div class="node-connector" id="conn-3">➔</div>
+
+          <!-- Summary Agent -->
+          <div class="agent-node" id="node-summary">
+            <div class="node-icon summary-icon">📊</div>
+            <div class="node-meta">
+              <span class="node-role">Agent 3</span>
+              <span class="node-name">Summary Agent</span>
+            </div>
+            <span class="node-status-pill" id="pill-summary">Idle</span>
+          </div>
+
+          <div class="node-connector" id="conn-4">➔</div>
+
+          <!-- Fact-Check Agent (Critic) -->
+          <div class="agent-node critic-highlight" id="node-critic">
+            <div class="node-icon critic-icon">🛡️</div>
+            <div class="node-meta">
+              <span class="node-role">Agent 4 (Critic Gate)</span>
+              <span class="node-name">Fact-Check Agent</span>
+            </div>
+            <span class="node-status-pill" id="pill-critic">Idle</span>
+          </div>
+
+          <div class="node-connector" id="conn-5">➔</div>
+
+          <!-- Writer Agent -->
+          <div class="agent-node" id="node-writer">
+            <div class="node-icon writer-icon">✍️</div>
+            <div class="node-meta">
+              <span class="node-role">Agent 5</span>
+              <span class="node-name">Writer Agent</span>
+            </div>
+            <span class="node-status-pill" id="pill-writer">Idle</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Results Tabbed Container -->
+      <section class="results-container glass-panel" id="results-panel">
+        <nav class="tabs-nav" id="results-tabs-nav" aria-label="Results navigation">
+          <button type="button" class="tab-btn active" id="tab-btn-report" onclick="window.switchTab('report')">
+            📄 Final Research Brief
+          </button>
+          <button type="button" class="tab-btn" id="tab-btn-critic" onclick="window.switchTab('critic')">
+            🛡️ Critic &amp; Fact-Check Audit
+          </button>
+          <button type="button" class="tab-btn" id="tab-btn-evidence" onclick="window.switchTab('evidence')">
+            📚 Grounded Evidence (RAG)
+          </button>
+          <button type="button" class="tab-btn" id="tab-btn-trace" onclick="window.switchTab('trace')">
+            ⚡ Unit-4 Message Trace
+          </button>
+          <button type="button" class="tab-btn" id="tab-btn-audit" onclick="window.switchTab('audit')">
+            📜 Run Log (JSONL)
+          </button>
+          <button type="button" class="tab-btn" id="tab-btn-chaos" onclick="window.switchTab('chaos')">
+            🧪 Fault Tolerance Lab
+          </button>
+          <button type="button" class="tab-btn" id="tab-btn-arch" onclick="window.switchTab('arch')">
+            🏛️ Architecture &amp; Corpus
+          </button>
+        </nav>
+
+        <!-- Tab 1: Research Brief -->
+        <article class="tab-content active" id="tab-content-report">
+          <div class="report-actions-bar">
+            <div class="meta-tags" id="report-meta-tags">
+              <span class="tag-chip" id="tag-run-id">Run ID: -</span>
+              <span class="tag-chip chip-success" id="tag-run-status">Status: Standby</span>
+              <span class="tag-chip" id="tag-evidence-count">0 Sources Grounded</span>
+            </div>
+            <div class="action-buttons">
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-copy-report" onclick="window.copyReport()">
+                📋 Copy Markdown
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-download-report" onclick="window.downloadReport()">
+                💾 Download Brief (.md)
+              </button>
+            </div>
+          </div>
+          <div class="report-body markdown-rendered" id="report-rendered-view">
+            <div class="empty-state">
+              <p>Execute a research run to view the structured literature summary with verbatim grounding.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Tab 2: Critic & Fact Check Audit -->
+        <article class="tab-content" id="tab-content-critic">
+          <div class="critic-summary-card" id="critic-summary-card">
+            <div class="critic-verdict-box" id="critic-verdict-box">
+              <span class="verdict-label">Critic Gate Verdict</span>
+              <span class="verdict-status" id="critic-verdict-text">-</span>
+            </div>
+            <div class="critic-stats-row">
+              <div class="stat-box">
+                <span class="stat-num" id="stat-claims-retained">0</span>
+                <span class="stat-label">Claims Verified &amp; Retained</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-num" id="stat-claims-dropped">0</span>
+                <span class="stat-label">Unsupported Claims Dropped</span>
+              </div>
+              <div class="stat-box">
+                <span class="stat-num" id="stat-citation-valid">100%</span>
+                <span class="stat-label">Citation Integrity</span>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="subheading">Grounding Verification Checklist (Per-Claim Quotes)</h4>
+          <div class="claims-table-wrapper" id="claims-table-container">
+            <table class="data-table" id="claims-audit-table">
+              <thead>
+                <tr>
+                  <th>Claim</th>
+                  <th>Source ID</th>
+                  <th>Grounded In Passage (Verbatim Match)</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="claims-audit-tbody">
+                <tr><td colspan="4" class="text-center">No claims evaluated yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4 class="subheading" style="margin-top: 1.5rem;">Dropped Claims (Ungrounded Hallucinations Prevented)</h4>
+          <div class="dropped-claims-container" id="dropped-claims-list">
+            <p class="text-muted">None. All retained claims passed verification.</p>
+          </div>
+        </article>
+
+        <!-- Tab 3: Grounded Evidence Passages -->
+        <article class="tab-content" id="tab-content-evidence">
+          <div class="evidence-grid" id="evidence-cards-container">
+            <p class="text-muted">No evidence retrieved yet.</p>
+          </div>
+        </article>
+
+        <!-- Tab 4: Unit-4 Trace -->
+        <article class="tab-content" id="tab-content-trace">
+          <div class="trace-header-info">
+            <p>Full structured audit trace adhering to <strong>Page 18 of Unit-4 Multi-Agent System and Collaboration</strong> (FIPA ACL Performatives).</p>
+          </div>
+          <div class="trace-timeline" id="unit4-timeline-container">
+            <p class="text-muted">Trace events will appear here after execution.</p>
+          </div>
+        </article>
+
+        <!-- Tab 5: JSONL Run Log -->
+        <article class="tab-content" id="tab-content-audit">
+          <div class="log-viewer-controls">
+            <span>Viewing <code>logs/run.jsonl</code> append-only record audit</span>
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-refresh-logs" onclick="window.fetchAuditLogs()">
+              🔄 Refresh Logs
+            </button>
+          </div>
+          <pre class="log-stream-box" id="jsonl-log-stream">Loading log stream...</pre>
+        </article>
+
+        <!-- Tab 6: Chaos & Fault Tolerance Lab -->
+        <article class="tab-content" id="tab-content-chaos">
+          <div class="chaos-intro">
+            <h3>Fault Tolerance &amp; Recovery Test Suite (Step 4)</h3>
+            <p>Inject real-time failure conditions to demonstrate automated recovery mechanisms.</p>
+          </div>
+          <div class="chaos-grid">
+            <div class="chaos-card">
+              <h4>1. Transient Failure &amp; Retry</h4>
+              <p>Simulates a transient error in Planner Agent on Attempt 1. Coordinator catches exception, schedules retry, and completes on Attempt 2.</p>
+              <button type="button" class="btn btn-secondary" id="btn-sim-retry" onclick="window.simulateScenario('transient_planner')">
+                ⚡ Inject Transient Retry Failure
+              </button>
+            </div>
+
+            <div class="chaos-card">
+              <h4>2. Permanent Failure &amp; Agent Reassignment</h4>
+              <p>Simulates repeated failure of primary agent. Production Coordinator dynamically reassigns task to a secondary specialist agent.</p>
+              <button type="button" class="btn btn-secondary" id="btn-sim-reassign" onclick="window.simulateScenario('agent_reassignment')">
+                🔄 Inject Reassignment Failure
+              </button>
+            </div>
+
+            <div class="chaos-card">
+              <h4>3. Missing Data Safe Stopping</h4>
+              <p>Simulates out-of-domain query with zero corpus matches. System safely terminates with <code>stopped_no_evidence</code> without hallucinating.</p>
+              <button type="button" class="btn btn-secondary" id="btn-sim-no-evidence" onclick="window.simulateScenario('no_evidence')">
+                🛑 Test Safe Stop (Zero Evidence)
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Tab 7: Architecture & Corpus -->
+        <article class="tab-content" id="tab-content-arch">
+          <div class="arch-preview-card">
+            <h3>System Architecture Diagram</h3>
+            <p class="text-muted">Sequential Pipeline with Grounded Retrieval (TF-IDF), Shared State, Critic Gate, and Audit Trail.</p>
+            <div class="diagram-img-container">
+              <img src="/architecture.svg" alt="Architecture Diagram" class="svg-embed">
+            </div>
+          </div>
+
+          <h3 style="margin-top: 2rem;">Local Grounding Corpus (5 Peer-Reviewed Papers &amp; UNESCO Guidance)</h3>
+          <div class="corpus-grid" id="corpus-papers-container">
+            <p class="text-muted">Loading corpus papers...</p>
+          </div>
+        </article>
+
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer" id="main-footer">
+      <p>Group 16 — Academic Research Assistant Team • Enterprise Multi-Agent System • Powered by Semantic Kernel</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

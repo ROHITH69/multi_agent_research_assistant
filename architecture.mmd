@@ -1,0 +1,19 @@
+flowchart TD
+    U[User research question] --> C[Coordinator]
+    C --> P[Planner Agent]
+    P --> R[Research Agent]
+    R --> D[(Local document corpus / TF-IDF retrieval)]
+    D --> R
+    R --> A[Analysis Agent]
+    A --> V[Reviewer Agent]
+    V -->|Pass| W[Writer Agent]
+    V -->|Needs revision| A
+    W --> Q{Citation validation}
+    Q -->|Valid| O[Final sourced report]
+    Q -->|Invalid| S[Safe stop]
+    C -. retries / failures .-> L[(Append-only JSONL audit log)]
+    P -. shared state .-> M[(Research state)]
+    R -. shared state .-> M
+    A -. shared state .-> M
+    V -. shared state .-> M
+    W -. shared state .-> M
