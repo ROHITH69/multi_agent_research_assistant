@@ -72,3 +72,58 @@ Each execution appends JSON records to `logs/run.jsonl`. The log is append-only 
 ## Scope and limitations
 
 The baseline uses deterministic local Python tools, not an LLM, so it is reproducible and needs no API key. Theme classification uses keyword rules. The corpus records link to real publications and institutional guidance, but contain only concise excerpts/summaries rather than complete papers. Confirm that the instructor accepts these sources or replace/augment them with the provided paper set before submitting. The course's Unit-4 page 18 communication contract was not supplied with the assignment PDF, so compare `communication.py` with that note and adjust any required field names before claiming exact contract compliance.
+
+---
+
+# Project Execution & Verification Evidence
+
+Visual evidence of implementation, execution, testing, agent coordination, and validation.
+
+## 1. Automated Test Results
+
+All 15 automated tests passed.
+
+![Automated Tests](screenshots/01_automated_tests_15_of_15_passed.png)
+
+## 2. Streamlit Application and Agent Pipeline
+
+![Streamlit Dashboard](screenshots/02_streamlit_dashboard_successful_agent_pipeline.png)
+
+## 3. Final Research Brief
+
+![Final Research Brief](screenshots/03_final_research_brief_generated.png)
+
+## 4. Critic and Fact-Check Validation
+
+![Critic and Fact Check](screenshots/04_critic_fact_check_audit_pass_100_percent_integrity.png)
+
+## 5. RAG-Based Evidence Retrieval
+
+![RAG Evidence](screenshots/05_rag_grounded_evidence_and_research_sources.png)
+
+## 6. Multi-Agent Communication
+
+![Agent Communication](screenshots/06_unit4_agent_communication_trace_success.png)
+
+## 7. Jupyter Notebook Demonstration
+
+![Jupyter Notebook](screenshots/07_jupyter_notebook_end_to_end_demo.png)
+
+## 8. Failure Recovery and Retry Validation
+
+![Failure Recovery](screenshots/08_failure_recovery_and_retry_validation.png)
+
+## Project Validation Summary
+
+| Validation Area | Result |
+|---|---|
+| Automated Tests | 15/15 Passed |
+| Multi-Agent Workflow | Successfully Executed |
+| Research Report | Generated |
+| Critic / Fact-Check | PASS |
+| Citation Integrity | 100% (as shown in audit) |
+| Agent Communication | Demonstrated |
+| Failure Recovery | Demonstrated |
+| Visual Documentation | 8 Screenshots |
+
+**Project Status:** Successfully Implemented, Executed, and Validated.
