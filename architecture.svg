@@ -1,0 +1,342 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1020" width="100%" height="100%" style="background:#0b0f19; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19" />
+      <stop offset="50%" stop-color="#111827" />
+      <stop offset="100%" stop-color="#0b0f19" />
+    </linearGradient>
+
+    <!-- Node Card Gradients -->
+    <linearGradient id="cardGradPrimary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+
+    <linearGradient id="cardGradAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+
+    <linearGradient id="accentBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+
+    <linearGradient id="accentGreen" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+
+    <linearGradient id="accentAmber" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+
+    <linearGradient id="accentRose" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f43f5e" />
+      <stop offset="100%" stop-color="#be123c" />
+    </linearGradient>
+
+    <linearGradient id="accentPurple" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c084fc" />
+      <stop offset="100%" stop-color="#7e22ce" />
+    </linearGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000" flood-opacity="0.5" />
+    </filter>
+
+    <filter id="glowCyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#38bdf8" flood-opacity="0.6" />
+    </filter>
+
+    <!-- Markers for Arrows -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#fbbf24" />
+    </marker>
+
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#34d399" />
+    </marker>
+
+    <marker id="arrowRose" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#f43f5e" />
+    </marker>
+
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#c084fc" />
+    </marker>
+
+    <marker id="arrowGray" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="100%" height="100%" fill="url(#bgGrad)" />
+
+  <!-- Grid Pattern Subdued -->
+  <g opacity="0.08" stroke="#ffffff" stroke-width="1">
+    <line x1="0" y1="100" x2="1280" y2="100" />
+    <line x1="0" y1="200" x2="1280" y2="200" />
+    <line x1="0" y1="300" x2="1280" y2="300" />
+    <line x1="0" y1="400" x2="1280" y2="400" />
+    <line x1="0" y1="500" x2="1280" y2="500" />
+    <line x1="0" y1="600" x2="1280" y2="600" />
+    <line x1="0" y1="700" x2="1280" y2="700" />
+    <line x1="0" y1="800" x2="1280" y2="800" />
+    <line x1="0" y1="900" x2="1280" y2="900" />
+    <line x1="160" y1="0" x2="160" y2="1020" />
+    <line x1="320" y1="0" x2="320" y2="1020" />
+    <line x1="480" y1="0" x2="480" y2="1020" />
+    <line x1="640" y1="0" x2="640" y2="1020" />
+    <line x1="800" y1="0" x2="800" y2="1020" />
+    <line x1="960" y1="0" x2="960" y2="1020" />
+    <line x1="1120" y1="0" x2="1120" y2="1020" />
+  </g>
+
+  <!-- TITLE & HEADER SECTION -->
+  <g transform="translate(60, 45)">
+    <rect x="0" y="0" width="1160" height="64" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1" filter="url(#shadow)" />
+    <circle cx="32" cy="32" r="14" fill="#38bdf8" opacity="0.2" />
+    <circle cx="32" cy="32" r="7" fill="#38bdf8" />
+    <text x="60" y="38" fill="#f8fafc" font-size="20" font-weight="700" letter-spacing="0.5">Multi-Agent Academic Research Assistant</text>
+    <text x="540" y="38" fill="#94a3b8" font-size="14" font-weight="500">| RAG-Critic Sequential Pipeline with FIPA-ACL &amp; Zero-Hallucination Gate</text>
+    <rect x="1030" y="18" width="105" height="28" rx="6" fill="#065f46" stroke="#10b981" stroke-width="1" />
+    <text x="1082" y="37" fill="#a7f3d0" font-size="12" font-weight="600" text-anchor="middle">Group 16 · Unit-4</text>
+  </g>
+
+  <!-- ================= PIPELINE NODES ================= -->
+
+  <!-- 1. USER INPUT -->
+  <g id="node-user" transform="translate(500, 140)">
+    <rect x="0" y="0" width="280" height="52" rx="26" fill="#1e293b" stroke="#38bdf8" stroke-width="2" filter="url(#shadow)" />
+    <text x="140" y="32" fill="#e2e8f0" font-size="14" font-weight="600" text-anchor="middle">🎓 User Research Question</text>
+  </g>
+
+  <!-- Arrow: User -> Coordinator -->
+  <path d="M 640 192 L 640 220" stroke="#38bdf8" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+
+  <!-- 2. COORDINATOR -->
+  <g id="node-coordinator" transform="translate(460, 222)">
+    <rect x="0" y="0" width="360" height="74" rx="12" fill="url(#cardGradPrimary)" stroke="#60a5fa" stroke-width="2" filter="url(#shadow)" />
+    <rect x="12" y="12" width="6" height="50" rx="3" fill="url(#accentBlue)" />
+    <text x="30" y="36" fill="#60a5fa" font-size="11" font-weight="700" letter-spacing="1">CENTRAL ORCHESTRATOR</text>
+    <text x="30" y="56" fill="#f8fafc" font-size="16" font-weight="700">Production / Base Coordinator</text>
+    <text x="250" y="35" fill="#94a3b8" font-size="11" text-anchor="end">FIPA-ACL Enforcer</text>
+    <rect x="260" y="22" width="88" height="22" rx="4" fill="#1e3a8a" />
+    <text x="304" y="37" fill="#93c5fd" font-size="10" font-weight="600" text-anchor="middle">2x Auto Retry</text>
+  </g>
+
+  <!-- Arrow: Coordinator -> Planner -->
+  <path d="M 640 296 L 640 330" stroke="#38bdf8" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+  <text x="650" y="318" fill="#94a3b8" font-size="11" font-family="monospace">REQUEST</text>
+
+  <!-- 3. PLANNER AGENT -->
+  <g id="node-planner" transform="translate(460, 332)">
+    <rect x="0" y="0" width="360" height="72" rx="10" fill="url(#cardGradPrimary)" stroke="#38bdf8" stroke-width="1.5" filter="url(#shadow)" />
+    <rect x="10" y="10" width="4" height="52" rx="2" fill="#38bdf8" />
+    <text x="26" y="32" fill="#38bdf8" font-size="11" font-weight="700" letter-spacing="0.5">AGENT 1 · QUERY DECOMPOSITION</text>
+    <text x="26" y="52" fill="#f1f5f9" font-size="15" font-weight="700">Planner / Query Agent</text>
+    <text x="345" y="50" fill="#94a3b8" font-size="10" text-anchor="end">extract_keywords, generate_subquestions</text>
+  </g>
+
+  <!-- Arrow: Planner -> Research -->
+  <path d="M 640 404 L 640 438" stroke="#38bdf8" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+  <text x="650" y="426" fill="#94a3b8" font-size="11" font-family="monospace">INFORM</text>
+
+  <!-- 4. RESEARCH AGENT -->
+  <g id="node-research" transform="translate(460, 440)">
+    <rect x="0" y="0" width="360" height="72" rx="10" fill="url(#cardGradPrimary)" stroke="#818cf8" stroke-width="1.5" filter="url(#shadow)" />
+    <rect x="10" y="10" width="4" height="52" rx="2" fill="#818cf8" />
+    <text x="26" y="32" fill="#818cf8" font-size="11" font-weight="700" letter-spacing="0.5">AGENT 2 · GROUNDED EVIDENCE RETRIEVAL</text>
+    <text x="26" y="52" fill="#f1f5f9" font-size="15" font-weight="700">Research / Retrieval Agent</text>
+    <text x="345" y="50" fill="#94a3b8" font-size="10" text-anchor="end">search_documents, retrieve_passages</text>
+  </g>
+
+  <!-- 5. LOCAL CORPUS & TF-IDF (Side Node to the Right) -->
+  <g id="node-corpus" transform="translate(890, 435)">
+    <!-- Cylinder Database Shape -->
+    <path d="M 0 16 C 0 8 50 0 140 0 C 230 0 280 8 280 16 L 280 66 C 280 74 230 82 140 82 C 50 82 0 74 0 66 Z" fill="#1e293b" stroke="#fbbf24" stroke-width="1.5" filter="url(#shadow)" />
+    <ellipse cx="140" cy="16" rx="140" ry="16" fill="#334155" stroke="#fbbf24" stroke-width="1.5" />
+    <text x="140" y="42" fill="#fbbf24" font-size="13" font-weight="700" text-anchor="middle">Local Document Corpus</text>
+    <text x="140" y="60" fill="#cbd5e1" font-size="11" text-anchor="middle">TF-IDF &amp; Cosine Similarity</text>
+    <text x="140" y="74" fill="#94a3b8" font-size="9" text-anchor="middle">UNESCO &amp; Open-Access AI Papers</text>
+  </g>
+
+  <!-- Bidirectional connection: Research <-> Corpus -->
+  <path d="M 820 465 L 888 465" stroke="#fbbf24" stroke-width="1.8" stroke-dasharray="4 3" fill="none" marker-end="url(#arrowAmber)" />
+  <path d="M 888 485 L 822 485" stroke="#fbbf24" stroke-width="1.8" stroke-dasharray="4 3" fill="none" marker-end="url(#arrowAmber)" />
+  <text x="854" y="458" fill="#fbbf24" font-size="9" font-weight="600" text-anchor="middle">QUERY</text>
+  <text x="854" y="500" fill="#fbbf24" font-size="9" font-weight="600" text-anchor="middle">PASSAGES</text>
+
+  <!-- Arrow: Research -> Safe Stop (No Evidence Branch) -->
+  <path d="M 460 476 L 390 476" stroke="#f43f5e" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#arrowRose)" />
+  <text x="425" y="468" fill="#f43f5e" font-size="9" font-weight="600" text-anchor="middle">score &lt;= 0</text>
+
+  <!-- Safe Stop: No Evidence -->
+  <g id="node-stop-evidence" transform="translate(230, 452)">
+    <rect x="0" y="0" width="158" height="48" rx="8" fill="#2d121c" stroke="#f43f5e" stroke-width="1" />
+    <text x="79" y="24" fill="#fda4af" font-size="11" font-weight="700" text-anchor="middle">Safe Stop</text>
+    <text x="79" y="38" fill="#f43f5e" font-size="9" text-anchor="middle">stopped_no_evidence</text>
+  </g>
+
+  <!-- Arrow: Research -> Analysis -->
+  <path d="M 640 512 L 640 546" stroke="#38bdf8" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+  <text x="650" y="534" fill="#94a3b8" font-size="11" font-family="monospace">INFORM</text>
+
+  <!-- 6. ANALYSIS AGENT -->
+  <g id="node-analysis" transform="translate(460, 548)">
+    <rect x="0" y="0" width="360" height="72" rx="10" fill="url(#cardGradPrimary)" stroke="#34d399" stroke-width="1.5" filter="url(#shadow)" />
+    <rect x="10" y="10" width="4" height="52" rx="2" fill="#34d399" />
+    <text x="26" y="32" fill="#34d399" font-size="11" font-weight="700" letter-spacing="0.5">AGENT 3 · THEMATIC CLUSTERING</text>
+    <text x="26" y="52" fill="#f1f5f9" font-size="15" font-weight="700">Analysis / Summary Agent</text>
+    <text x="345" y="50" fill="#94a3b8" font-size="10" text-anchor="end">group_findings_by_theme, compare_evidence</text>
+  </g>
+
+  <!-- Arrow: Analysis -> Reviewer -->
+  <path d="M 640 620 L 640 654" stroke="#38bdf8" stroke-width="2" fill="none" marker-end="url(#arrow)" />
+  <text x="650" y="642" fill="#94a3b8" font-size="11" font-family="monospace">PROPOSE</text>
+
+  <!-- 7. REVIEWER / CRITIC GATE -->
+  <g id="node-reviewer" transform="translate(460, 656)">
+    <rect x="0" y="0" width="360" height="74" rx="10" fill="url(#cardGradAccent)" stroke="#f43f5e" stroke-width="1.8" filter="url(#shadow)" />
+    <rect x="10" y="10" width="4" height="54" rx="2" fill="#f43f5e" />
+    <text x="26" y="32" fill="#f43f5e" font-size="11" font-weight="700" letter-spacing="0.5">AGENT 4 · CRITIC &amp; CITATION GATE</text>
+    <text x="26" y="52" fill="#f1f5f9" font-size="15" font-weight="700">Reviewer / Fact-Check Agent</text>
+    <text x="345" y="50" fill="#fda4af" font-size="10" text-anchor="end">verify_citations, detect_unsupported_claims</text>
+  </g>
+
+  <!-- CRITIC REPAIR FEEDBACK LOOP: Reviewer -> Needs revision -> Analysis -->
+  <path d="M 460 693 C 380 693, 380 584, 458 584" stroke="#f43f5e" stroke-width="1.8" stroke-dasharray="4 3" fill="none" marker-end="url(#arrowRose)" />
+  <text x="365" y="635" fill="#f43f5e" font-size="10" font-weight="700" text-anchor="middle">DISCONFIRM</text>
+  <text x="365" y="648" fill="#fda4af" font-size="9" text-anchor="middle">(Prune ungrounded)</text>
+
+  <!-- Arrow: Reviewer -> Writer (Pass) -->
+  <path d="M 640 730 L 640 766" stroke="#34d399" stroke-width="2.2" fill="none" marker-end="url(#arrowGreen)" />
+  <text x="650" y="752" fill="#34d399" font-size="11" font-weight="700" font-family="monospace">CONFIRM (Pass)</text>
+
+  <!-- 8. WRITER AGENT -->
+  <g id="node-writer" transform="translate(460, 768)">
+    <rect x="0" y="0" width="360" height="72" rx="10" fill="url(#cardGradPrimary)" stroke="#c084fc" stroke-width="1.5" filter="url(#shadow)" />
+    <rect x="10" y="10" width="4" height="52" rx="2" fill="#c084fc" />
+    <text x="26" y="32" fill="#c084fc" font-size="11" font-weight="700" letter-spacing="0.5">AGENT 5 · REPORT SYNTHESIS</text>
+    <text x="26" y="52" fill="#f1f5f9" font-size="15" font-weight="700">Writer Agent</text>
+    <text x="345" y="50" fill="#94a3b8" font-size="10" text-anchor="end">format_research_report, validate_report_sources</text>
+  </g>
+
+  <!-- Arrow: Writer -> Citation Validation Decision -->
+  <path d="M 640 840 L 640 864" stroke="#c084fc" stroke-width="2" fill="none" marker-end="url(#arrowPurple)" />
+
+  <!-- 9. CITATION VALIDATION GATE (Rhombus / Diamond) -->
+  <g id="node-validation" transform="translate(560, 866)">
+    <polygon points="80,0 160,35 80,70 0,35" fill="#1e293b" stroke="#38bdf8" stroke-width="1.8" filter="url(#shadow)" />
+    <text x="80" y="32" fill="#e2e8f0" font-size="11" font-weight="700" text-anchor="middle">Citation</text>
+    <text x="80" y="46" fill="#94a3b8" font-size="10" text-anchor="middle">Validation?</text>
+  </g>
+
+  <!-- Branch: Valid -> Final Report -->
+  <path d="M 720 901 L 780 901" stroke="#34d399" stroke-width="2" fill="none" marker-end="url(#arrowGreen)" />
+  <text x="745" y="893" fill="#34d399" font-size="11" font-weight="700">Valid</text>
+
+  <!-- Final Sourced Report -->
+  <g id="node-final-report" transform="translate(782, 874)">
+    <rect x="0" y="0" width="230" height="54" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="2" filter="url(#shadow)" />
+    <text x="115" y="26" fill="#a7f3d0" font-size="13" font-weight="700" text-anchor="middle">📄 Final Sourced Report</text>
+    <text x="115" y="42" fill="#6ee7b7" font-size="10" text-anchor="middle">Grounded Brief + Verbatim Quotes</text>
+  </g>
+
+  <!-- Branch: Invalid -> Safe Stop -->
+  <path d="M 560 901 L 500 901" stroke="#f43f5e" stroke-width="2" fill="none" marker-end="url(#arrowRose)" />
+  <text x="532" y="893" fill="#f43f5e" font-size="11" font-weight="700" text-anchor="middle">Invalid</text>
+
+  <!-- Safe Stop: Citation Mismatch -->
+  <g id="node-stop-citation" transform="translate(320, 874)">
+    <rect x="0" y="0" width="178" height="54" rx="8" fill="#2d121c" stroke="#f43f5e" stroke-width="1.5" />
+    <text x="89" y="26" fill="#fda4af" font-size="12" font-weight="700" text-anchor="middle">⛔ Safe Stop</text>
+    <text x="89" y="42" fill="#f43f5e" font-size="9" text-anchor="middle">stopped_report_validation_failed</text>
+  </g>
+
+
+  <!-- ================= STATE & LOGGING INFRASTRUCTURE (LEFT & RIGHT PANELS) ================= -->
+
+  <!-- LEFT PANEL: Central Shared State Memory -->
+  <g id="panel-shared-state" transform="translate(50, 310)">
+    <rect x="0" y="0" width="165" height="420" rx="12" fill="#111827" stroke="#38bdf8" stroke-width="1.2" stroke-dasharray="4 3" filter="url(#shadow)" opacity="0.95" />
+    <rect x="12" y="12" width="141" height="28" rx="6" fill="#1e293b" />
+    <text x="82" y="30" fill="#38bdf8" font-size="11" font-weight="700" text-anchor="middle">Central Shared State</text>
+    <text x="82" y="58" fill="#cbd5e1" font-size="11" font-weight="600" text-anchor="middle">ResearchState</text>
+    <line x1="15" y1="68" x2="150" y2="68" stroke="#334155" />
+    
+    <text x="20" y="92" fill="#94a3b8" font-size="10" font-family="monospace">• run_id</text>
+    <text x="20" y="112" fill="#94a3b8" font-size="10" font-family="monospace">• question</text>
+    <text x="20" y="132" fill="#94a3b8" font-size="10" font-family="monospace">• plan (subqueries)</text>
+    <text x="20" y="152" fill="#94a3b8" font-size="10" font-family="monospace">• retrieved_evidence</text>
+    <text x="20" y="172" fill="#94a3b8" font-size="10" font-family="monospace">• analysis (claims)</text>
+    <text x="20" y="192" fill="#94a3b8" font-size="10" font-family="monospace">• review (verdict)</text>
+    <text x="20" y="212" fill="#94a3b8" font-size="10" font-family="monospace">• report (markdown)</text>
+    <text x="20" y="232" fill="#94a3b8" font-size="10" font-family="monospace">• status (enum)</text>
+    <text x="20" y="252" fill="#94a3b8" font-size="10" font-family="monospace">• trace (history)</text>
+    <text x="20" y="272" fill="#94a3b8" font-size="10" font-family="monospace">• errors (diagnostics)</text>
+    
+    <rect x="14" y="295" width="137" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="82" y="315" fill="#f8fafc" font-size="10" font-weight="700" text-anchor="middle">Unit-4 Contracts</text>
+    <text x="22" y="333" fill="#64748b" font-size="9">• REQUEST / INFORM</text>
+    <text x="22" y="350" fill="#64748b" font-size="9">• QUERY / PROPOSE</text>
+    <text x="22" y="367" fill="#64748b" font-size="9">• CONFIRM / DISCONFIRM</text>
+    <text x="22" y="384" fill="#64748b" font-size="9">• FAILURE / REASSIGN</text>
+  </g>
+
+  <!-- Connectors from Shared State to Agents -->
+  <path d="M 215 368 L 458 368" stroke="#38bdf8" stroke-width="1" stroke-dasharray="3 3" opacity="0.6" />
+  <path d="M 215 584 L 458 584" stroke="#38bdf8" stroke-width="1" stroke-dasharray="3 3" opacity="0.6" />
+  <path d="M 215 804 L 458 804" stroke="#38bdf8" stroke-width="1" stroke-dasharray="3 3" opacity="0.6" />
+
+  <!-- RIGHT PANEL: Audit Log & Fault Recovery -->
+  <g id="panel-audit-log" transform="translate(1040, 600)">
+    <rect x="0" y="0" width="190" height="280" rx="12" fill="#111827" stroke="#64748b" stroke-width="1.2" stroke-dasharray="4 3" filter="url(#shadow)" opacity="0.95" />
+    <rect x="12" y="12" width="166" height="28" rx="6" fill="#1e293b" />
+    <text x="95" y="30" fill="#cbd5e1" font-size="11" font-weight="700" text-anchor="middle">Append-Only Audit Log</text>
+    <text x="95" y="58" fill="#94a3b8" font-size="10" font-family="monospace" text-anchor="middle">run.jsonl / traces</text>
+    <line x1="15" y1="68" x2="175" y2="68" stroke="#334155" />
+
+    <text x="18" y="90" fill="#64748b" font-size="10" font-weight="600">Fault Recovery:</text>
+    <text x="18" y="110" fill="#94a3b8" font-size="9">• Max Retries: 2 attempts</text>
+    <text x="18" y="128" fill="#94a3b8" font-size="9">• Auto Backoff &amp; Re-run</text>
+    <text x="18" y="146" fill="#94a3b8" font-size="9">• Dynamic Reassignment:</text>
+    <text x="26" y="162" fill="#a7f3d0" font-size="9">→ FallbackPlanner</text>
+    <text x="26" y="178" fill="#a7f3d0" font-size="9">→ FallbackRetrieval</text>
+    <text x="18" y="202" fill="#64748b" font-size="10" font-weight="600">Critic Protection:</text>
+    <text x="18" y="220" fill="#fda4af" font-size="9">• Zero Hallucination Gate</text>
+    <text x="18" y="238" fill="#fda4af" font-size="9">• Quote Citation Match</text>
+    <text x="18" y="256" fill="#fda4af" font-size="9">• Dropped claim tracking</text>
+  </g>
+
+  <!-- Connector from Coordinator to Audit Log -->
+  <path d="M 820 259 C 1130 259, 1135 480, 1135 595" stroke="#64748b" stroke-width="1.2" stroke-dasharray="4 3" fill="none" marker-end="url(#arrowGray)" />
+  <text x="1000" y="250" fill="#94a3b8" font-size="10" font-family="monospace">retries &amp; failure telemetry</text>
+
+  <!-- ================= BOTTOM LEGEND ================= -->
+  <g transform="translate(60, 960)">
+    <rect x="0" y="0" width="1160" height="42" rx="8" fill="#0f172a" stroke="#1e293b" />
+    <circle cx="30" cy="21" r="5" fill="#38bdf8" />
+    <text x="42" y="25" fill="#cbd5e1" font-size="11">Pipeline Flow</text>
+    <circle cx="150" cy="21" r="5" fill="#fbbf24" />
+    <text x="162" y="25" fill="#cbd5e1" font-size="11">Corpus TF-IDF RAG</text>
+    <circle cx="310" cy="21" r="5" fill="#f43f5e" />
+    <text x="322" y="25" fill="#cbd5e1" font-size="11">Critic Gate / Safe Stop</text>
+    <circle cx="485" cy="21" r="5" fill="#34d399" />
+    <text x="497" y="25" fill="#cbd5e1" font-size="11">Validated Pass / Success</text>
+    <circle cx="680" cy="21" r="5" fill="#c084fc" />
+    <text x="692" y="25" fill="#cbd5e1" font-size="11">Writer &amp; Synthesizer</text>
+    <line x1="840" y1="21" x2="865" y2="21" stroke="#64748b" stroke-width="2" stroke-dasharray="3 3" />
+    <text x="875" y="25" fill="#cbd5e1" font-size="11">Audit &amp; Shared Memory</text>
+    <text x="1135" y="25" fill="#64748b" font-size="10" text-anchor="end">Academic Multi-Agent Architecture v1.0</text>
+  </g>
+</svg>

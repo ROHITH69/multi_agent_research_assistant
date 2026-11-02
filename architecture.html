@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Architecture Specification · Multi-Agent Academic Research Assistant</title>
+  <meta name="description" content="Interactive multi-agent system architecture documentation with RAG-Critic pipeline, FIPA-ACL communication contract, and zero-hallucination critic gate.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #090d16;
+      --bg-secondary: #0f172a;
+      --bg-card: #1e293b;
+      --bg-card-hover: #273549;
+      --border-color: #334155;
+      --border-highlight: #475569;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-indigo: #818cf8;
+      --accent-purple: #c084fc;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #f43f5e;
+      --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Fira Code', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #f1f5f9;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f8fafc;
+      --border-color: #e2e8f0;
+      --border-highlight: #cbd5e1;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    /* Top Navigation Header */
+    header {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #38bdf8, #2563eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.15rem;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    }
+
+    .brand-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+
+    .badge-pill {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-production {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .badge-unit4 {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      margin-left: 0.5rem;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-highlight);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      border: 1px solid #3b82f6;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+    }
+
+    /* Main Container & Layout */
+    .container {
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+      flex: 1;
+    }
+
+    /* Tabbed Navigation Bar */
+    .tabs-nav {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      padding: 0.75rem 1.25rem;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .tab-btn.active {
+      color: var(--accent-blue);
+      border-bottom-color: var(--accent-blue);
+    }
+
+    /* Tab Content Areas */
+    .tab-panel {
+      display: none;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Architecture Viewer Box */
+    .viewer-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .viewer-toolbar {
+      padding: 0.75rem 1.25rem;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .toolbar-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .toolbar-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .diagram-viewport {
+      padding: 1.5rem;
+      min-height: 680px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, #111827 0%, #0b0f19 100%);
+      overflow: auto;
+      position: relative;
+    }
+
+    [data-theme="light"] .diagram-viewport {
+      background: radial-gradient(circle at center, #ffffff 0%, #f1f5f9 100%);
+    }
+
+    .diagram-viewport object,
+    .diagram-viewport svg,
+    .diagram-viewport img {
+      max-width: 100%;
+      height: auto;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      transform-origin: center center;
+    }
+
+    /* Cards Grid */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: var(--shadow-lg);
+      transition: all 0.2s ease;
+    }
+
+    .card:hover {
+      border-color: var(--border-highlight);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+    }
+
+    .tool-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--accent-blue);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      margin-right: 0.35rem;
+      margin-bottom: 0.35rem;
+    }
+
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      margin-top: 1rem;
+      background: var(--bg-card);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+
+    th {
+      background: var(--bg-secondary);
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-color);
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: top;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: var(--bg-card-hover);
+    }
+
+    /* Code Blocks */
+    pre {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      background: #050811;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 1rem;
+      overflow-x: auto;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+
+    code {
+      font-family: var(--font-mono);
+    }
+
+    .key-hl { color: #38bdf8; }
+    .val-str { color: #34d399; }
+    .val-num { color: #fbbf24; }
+    .val-null { color: #f43f5e; }
+
+    /* Highlights & Flow Step */
+    .flow-step {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      align-items: flex-start;
+    }
+
+    .step-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--bg-secondary);
+      border: 2px solid var(--accent-blue);
+      color: var(--accent-blue);
+      font-weight: 700;
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content {
+      flex: 1;
+    }
+
+    .step-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .step-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      padding: 1.25rem 2rem;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 1rem;
+      }
+      .container {
+        padding: 1rem;
+      }
+      .grid-2, .grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .header-actions {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">⚡</div>
+      <div>
+        <div class="brand-title">Multi-Agent Academic Research Assistant</div>
+        <div class="brand-subtitle">Architecture &amp; Communication Protocol Specification</div>
+      </div>
+      <span class="badge-pill badge-production">Group 16 Production Ready</span>
+      <span class="badge-pill badge-unit4">Unit-4 Page 18 MAS</span>
+    </div>
+    <div class="header-actions">
+      <button class="btn" id="btn-theme" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+        <span id="theme-icon">☀️</span> <span id="theme-text">Light</span>
+      </button>
+      <a href="architecture.svg" download class="btn btn-primary" title="Download standalone vector graphic">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download SVG
+      </a>
+      <a href="architecture.mmd" target="_blank" class="btn" title="View Mermaid Source">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        architecture.mmd
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+
+    <!-- Navigation Tabs -->
+    <nav class="tabs-nav" role="tablist">
+      <button class="tab-btn active" onclick="switchTab('tab-diagram', this)">
+        <span>🗺️</span> Architecture Diagram
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-roster', this)">
+        <span>🤖</span> Agent Roster &amp; Tools
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-unit4', this)">
+        <span>📜</span> Unit-4 Communication Contract
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-fault', this)">
+        <span>🛡️</span> Fault Tolerance &amp; Critic Gate
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-source', this)">
+        <span>💻</span> Mermaid Source
+      </button>
+    </nav>
+
+    <!-- TAB 1: ARCHITECTURE DIAGRAM -->
+    <section id="tab-diagram" class="tab-panel active">
+      <div class="viewer-card">
+        <div class="viewer-toolbar">
+          <div class="toolbar-group">
+            <span class="toolbar-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+              RAG-Critic Sequential Pipeline with Central Coordinator &amp; FIPA-ACL Speech Acts
+            </span>
+          </div>
+          <div class="toolbar-group">
+            <button class="btn" onclick="zoomDiagram(1.2)" title="Zoom In">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+              Zoom In
+            </button>
+            <button class="btn" onclick="zoomDiagram(0.8)" title="Zoom Out">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+              Zoom Out
+            </button>
+            <button class="btn" onclick="resetZoom()" title="Reset Zoom">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              Reset
+            </button>
+            <button class="btn" onclick="toggleFullscreen()" title="Fullscreen">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+              Full
+            </button>
+          </div>
+        </div>
+
+        <div class="diagram-viewport" id="viewport">
+          <!-- Embed Architecture SVG directly with high performance -->
+          <img id="diagram-img" src="architecture.svg" alt="Multi-Agent System Architecture" style="width: 100%; max-width: 1200px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);" />
+        </div>
+      </div>
+
+      <!-- Quick Highlights Grid -->
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🔍 RAG Grounded Retrieval</span>
+            <span class="tool-tag">Corpus TF-IDF</span>
+          </div>
+          <p class="card-subtitle">Local document corpus with cosine similarity ranking. Safe stop triggers if search returns zero relevance.</p>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">⚖️ Zero-Hallucination Critic</span>
+            <span class="tool-tag">Fact-Check Gate</span>
+          </div>
+          <p class="card-subtitle">Reviewer validates each claim against verbatim quotes. Unverified assertions are dropped before writing.</p>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🔁 Production Fault-Tolerance</span>
+            <span class="tool-tag">2x Retries + Fallbacks</span>
+          </div>
+          <p class="card-subtitle">Centralized coordinator intercepts exceptions, executes exponential retries, and reassigns to fallback specialists.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: AGENT ROSTER & TOOLS -->
+    <section id="tab-roster" class="tab-panel">
+      <div class="card" style="margin-bottom: 1.25rem;">
+        <h2 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;">Specialist Agent Roster &amp; Dual-Tool Architecture</h2>
+        <p style="color: var(--text-secondary); font-size: 0.88rem;">Each specialist module encapsulates exactly two canonical Python tools, accessible directly and exposed via Microsoft Semantic Kernel plugins.</p>
+      </div>
+
+      <div class="grid-2">
+        <!-- Planner Agent -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title" style="color: var(--accent-blue);">1. Planner / Query Agent</span>
+            <span class="tool-tag">agents/planner_agent.py</span>
+          </div>
+          <p class="card-subtitle">Decomposes raw research questions into domain keywords and structured sub-questions.</p>
+          <div style="margin-top: 0.5rem;">
+            <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 0.4rem;">Canonical Python Tools:</div>
+            <span class="tool-tag">extract_keywords(text)</span>
+            <span class="tool-tag">generate_subquestions(question)</span>
+          </div>
+          <div style="margin-top: 0.75rem; font-size: 0.82rem; color: var(--text-secondary);">
+            <strong>Fallback Specialist:</strong> <code>FallbackPlannerAgent</code> (heuristic keyword extraction)
+          </div>
+        </div>
+
+        <!-- Research Agent -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title" style="color: var(--accent-indigo);">2. Research / Retrieval Agent</span>
+            <span class="tool-tag">agents/research_agent.py</span>
+          </div>
+          <p class="card-subtitle">Searches peer-reviewed academic documents via TF-IDF vector space model and extracts passage excerpts.</p>
+          <div style="margin-top: 0.5rem;">
+            <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 0.4rem;">Canonical Python Tools:</div>
+            <span class="tool-tag">search_documents(corpus, query)</span>
+            <span class="tool-tag">retrieve_passages(doc_id)</span>
+          </div>
+          <div style="margin-top: 0.75rem; font-size: 0.82rem; color: var(--text-secondary);">
+            <strong>Fallback Specialist:</strong> <code>FallbackRetrievalAgent</code> (broad-string matching)
+          </div>
+        </div>
+
+        <!-- Analysis Agent -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title" style="color: var(--accent-emerald);">3. Analysis / Summary Agent</span>
+            <span class="tool-tag">agents/analysis_agent.py</span>
+          </div>
+          <p class="card-subtitle">Groups findings into thematic clusters (Learning Support, Teacher Workflow, Risks) and extracts candidate claims.</p>
+          <div style="margin-top: 0.5rem;">
+            <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 0.4rem;">Canonical Python Tools:</div>
+            <span class="tool-tag">group_findings_by_theme(evidence)</span>
+            <span class="tool-tag">compare_evidence(claims)</span>
+          </div>
+          <div style="margin-top: 0.75rem; font-size: 0.82rem; color: var(--text-secondary);">
+            <strong>Performative:</strong> Emits <code>PROPOSE</code> with candidate claims and provisional citations.
+          </div>
+        </div>
+
+        <!-- Reviewer Agent -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title" style="color: var(--accent-rose);">4. Reviewer / Fact-Check Agent (Critic)</span>
+            <span class="tool-tag">agents/reviewer_agent.py</span>
+          </div>
+          <p class="card-subtitle">Zero-hallucination critic gate. Verifies whether candidate claims have exact matching quotes in retrieved evidence.</p>
+          <div style="margin-top: 0.5rem;">
+            <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 0.4rem;">Canonical Python Tools:</div>
+            <span class="tool-tag">verify_citations(claims, evidence)</span>
+            <span class="tool-tag">detect_unsupported_claims(claims)</span>
+          </div>
+          <div style="margin-top: 0.75rem; font-size: 0.82rem; color: var(--text-secondary);">
+            <strong>Critic Decisions:</strong> <code>CONFIRM</code> (Pass to Writer) or <code>DISCONFIRM</code> (Prune to dropped claims).
+          </div>
+        </div>
+
+        <!-- Writer Agent -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title" style="color: var(--accent-purple);">5. Writer Agent</span>
+            <span class="tool-tag">agents/writer_agent.py</span>
+          </div>
+          <p class="card-subtitle">Formats final structured Markdown academic report and guarantees 100% cited ID matching against evidence.</p>
+          <div style="margin-top: 0.5rem;">
+            <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 0.4rem;">Canonical Python Tools:</div>
+            <span class="tool-tag">format_research_report(state)</span>
+            <span class="tool-tag">validate_report_sources(report, evidence)</span>
+          </div>
+          <div style="margin-top: 0.75rem; font-size: 0.82rem; color: var(--text-secondary);">
+            <strong>Citation Gate:</strong> Safely aborts if an unregistered citation ID appears in the output.
+          </div>
+        </div>
+
+        <!-- Central Coordinator -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title" style="color: #60a5fa;">6. Coordinator &amp; State Machine</span>
+            <span class="tool-tag">coordinator.py &amp; production_coordinator.py</span>
+          </div>
+          <p class="card-subtitle">Central engine driving state machine transitions, 2x retry backoff policies, audit JSONL logging, and dynamic reassignments.</p>
+          <div style="margin-top: 0.5rem;">
+            <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 0.4rem;">Core Capabilities:</div>
+            <span class="tool-tag">ResearchState dataclass</span>
+            <span class="tool-tag">Append-only run.jsonl</span>
+            <span class="tool-tag">Semantic Kernel Plugins</span>
+          </div>
+          <div style="margin-top: 0.75rem; font-size: 0.82rem; color: var(--text-secondary);">
+            <strong>Status Enums:</strong> <code>initialized</code>, <code>success</code>, <code>stopped_no_evidence</code>, <code>stopped_report_validation_failed</code>, <code>stopped_agent_failure</code>.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: UNIT-4 COMMUNICATION CONTRACT -->
+    <section id="tab-unit4" class="tab-panel">
+      <div class="card" style="margin-bottom: 1.25rem;">
+        <h2 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;">Unit-4 Page 18 Multi-Agent System Communication Contract</h2>
+        <p style="color: var(--text-secondary); font-size: 0.88rem;">All agents communicate via standardized FIPA-ACL speech act envelopes defined in <code>unit4_contract.py</code>.</p>
+      </div>
+
+      <div class="grid-2">
+        <!-- Message Fields Spec -->
+        <div class="card">
+          <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.75rem;">Standard Message Envelope Schema</h3>
+          <pre><code>{
+  <span class="key-hl">"message_id"</span>: <span class="val-str">"84a7e94e-2824-4f27-9ad8-dcf9c4885a02"</span>,
+  <span class="key-hl">"conversation_id"</span>: <span class="val-str">"374e47da-9d7c-4f69-82f1-3e573beeb83e"</span>,
+  <span class="key-hl">"sender_id"</span>: <span class="val-str">"fact_check_agent"</span>,
+  <span class="key-hl">"receiver_id"</span>: <span class="val-str">"coordinator"</span>,
+  <span class="key-hl">"performative"</span>: <span class="val-str">"CONFIRM"</span>,
+  <span class="key-hl">"ontology"</span>: <span class="val-str">"academic_research_rag_critic"</span>,
+  <span class="key-hl">"protocol"</span>: <span class="val-str">"rag_critic_pipeline_v1"</span>,
+  <span class="key-hl">"task_id"</span>: <span class="val-str">"review-round-1"</span>,
+  <span class="key-hl">"status"</span>: <span class="val-str">"SUCCESS"</span>,
+  <span class="key-hl">"content"</span>: {
+    <span class="key-hl">"verdict"</span>: <span class="val-str">"pass"</span>,
+    <span class="key-hl">"supported_claims"</span>: <span class="val-num">5</span>,
+    <span class="key-hl">"dropped_claims"</span>: <span class="val-num">0</span>
+  },
+  <span class="key-hl">"error_details"</span>: <span class="val-null">null</span>,
+  <span class="key-hl">"timestamp"</span>: <span class="val-str">"2026-10-21T09:10:02Z"</span>,
+  <span class="key-hl">"metadata"</span>: { <span class="key-hl">"attempt"</span>: <span class="val-num">1</span> }
+}</code></pre>
+        </div>
+
+        <!-- Performative Taxonomy -->
+        <div class="card">
+          <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.75rem;">FIPA-ACL Performative Taxonomy</h3>
+          <div class="table-container" style="margin-top: 0;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Performative</th>
+                  <th>Sender → Receiver</th>
+                  <th>Semantics</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="tool-tag" style="color:#38bdf8;">REQUEST</span></td>
+                  <td>Coordinator → Agent</td>
+                  <td>Instructs agent to execute subtask</td>
+                </tr>
+                <tr>
+                  <td><span class="tool-tag" style="color:#34d399;">INFORM</span></td>
+                  <td>Agent → Coordinator</td>
+                  <td>Returns computation results</td>
+                </tr>
+                <tr>
+                  <td><span class="tool-tag" style="color:#fbbf24;">QUERY</span></td>
+                  <td>Research → Corpus</td>
+                  <td>Retrieval vector search</td>
+                </tr>
+                <tr>
+                  <td><span class="tool-tag" style="color:#818cf8;">PROPOSE</span></td>
+                  <td>Analysis → Reviewer</td>
+                  <td>Submits candidate claims</td>
+                </tr>
+                <tr>
+                  <td><span class="tool-tag" style="color:#34d399;">CONFIRM</span></td>
+                  <td>Reviewer → Coordinator</td>
+                  <td>Critic approves grounded evidence</td>
+                </tr>
+                <tr>
+                  <td><span class="tool-tag" style="color:#f43f5e;">DISCONFIRM</span></td>
+                  <td>Reviewer → Coordinator</td>
+                  <td>Critic rejects ungrounded claims</td>
+                </tr>
+                <tr>
+                  <td><span class="tool-tag" style="color:#f43f5e;">FAILURE</span></td>
+                  <td>Agent → Coordinator</td>
+                  <td>Unrecoverable execution exception</td>
+                </tr>
+                <tr>
+                  <td><span class="tool-tag" style="color:#c084fc;">REASSIGN</span></td>
+                  <td>Coordinator → System</td>
+                  <td>Dynamic specialist substitution</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: FAULT TOLERANCE & CRITIC GATE -->
+    <section id="tab-fault" class="tab-panel">
+      <div class="card" style="margin-bottom: 1.25rem;">
+        <h2 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem;">Production Fault Tolerance &amp; Critic Gate Rules</h2>
+        <p style="color: var(--text-secondary); font-size: 0.88rem;">Matrix of failure scenarios, triggers, automated system actions, and verified academic outcomes.</p>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Failure Scenario</th>
+              <th>Trigger Condition</th>
+              <th>System Action</th>
+              <th>System Outcome</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Transient Agent Exception</strong></td>
+              <td>Temporary Python exception during step</td>
+              <td>Coordinator catches error, logs in <code>run.jsonl</code>, increments attempt counter, and retries up to 2 times.</td>
+              <td><span class="badge-pill badge-production">Auto Recovers</span> Task succeeds on retry without halting pipeline.</td>
+            </tr>
+            <tr>
+              <td><strong>Permanent Agent Failure</strong></td>
+              <td>Agent crashes after all retry attempts</td>
+              <td>Production Coordinator triggers <code>REASSIGN</code> speech act to secondary specialist (e.g. <code>FallbackPlannerAgent</code>).</td>
+              <td><span class="badge-pill badge-production">Dynamic Reassignment</span> Execution continues with graceful degradation.</td>
+            </tr>
+            <tr>
+              <td><strong>Out-of-Domain Query</strong></td>
+              <td>Query matches 0 documents (cosine similarity &lt;= 0)</td>
+              <td>Retrieval agent returns empty evidence set; Coordinator initiates clean Safe Stop.</td>
+              <td><span class="badge-pill" style="background:rgba(244,63,94,0.15); color:#fda4af; border:1px solid rgba(244,63,94,0.3);">Safe Stop</span> Status set to <code>stopped_no_evidence</code>. Zero hallucinations produced.</td>
+            </tr>
+            <tr>
+              <td><strong>Ungrounded Candidate Claim</strong></td>
+              <td>Claim lacks exact verbatim quote in cited source</td>
+              <td>Fact-Check Agent issues <code>DISCONFIRM</code> verdict; claim is pruned from body and added to dropped claims list.</td>
+              <td><span class="badge-pill badge-production">Pruned &amp; Audited</span> Final brief explicitly records "Unsupported claims dropped".</td>
+            </tr>
+            <tr>
+              <td><strong>Citation ID Mismatch</strong></td>
+              <td>Final brief references an ID not in retrieved evidence</td>
+              <td>Writer source validator triggers hard rejection; Coordinator halts delivery.</td>
+              <td><span class="badge-pill" style="background:rgba(244,63,94,0.15); color:#fda4af; border:1px solid rgba(244,63,94,0.3);">Integrity Safe Stop</span> <code>stopped_report_validation_failed</code> protects academic integrity.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 5: MERMAID SOURCE -->
+    <section id="tab-source" class="tab-panel">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Canonical Mermaid Specification (architecture.mmd)</span>
+          <button class="btn btn-primary" onclick="copyMermaid()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span id="copy-btn-text">Copy Mermaid Code</span>
+          </button>
+        </div>
+        <pre><code id="mermaid-code">flowchart TD
+    U[User research question] --> C[Coordinator]
+    C --> P[Planner Agent]
+    P --> R[Research Agent]
+    R --> D[(Local document corpus / TF-IDF retrieval)]
+    D --> R
+    R --> A[Analysis Agent]
+    A --> V[Reviewer Agent]
+    V -->|Pass| W[Writer Agent]
+    V -->|Needs revision| A
+    W --> Q{Citation validation}
+    Q -->|Valid| O[Final sourced report]
+    Q -->|Invalid| S[Safe stop]
+    C -. retries / failures .-> L[(Append-only JSONL audit log)]
+    P -. shared state .-> M[(Research state)]
+    R -. shared state .-> M
+    A -. shared state .-> M
+    V -. shared state .-> M
+    W -. shared state .-> M</code></pre>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    Multi-Agent Academic Research Assistant · Group 16 · Unit-4 Communication Contract &amp; Critic Architecture Specification
+  </footer>
+
+  <!-- Interactive Scripts -->
+  <script>
+    // Tab Switching
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // Theme Toggle
+    function toggleTheme() {
+      const body = document.documentElement;
+      const currentTheme = body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      body.setAttribute('data-theme', newTheme);
+      document.getElementById('theme-icon').textContent = newTheme === 'light' ? '🌙' : '☀️';
+      document.getElementById('theme-text').textContent = newTheme === 'light' ? 'Dark' : 'Light';
+      localStorage.setItem('theme', newTheme);
+    }
+
+    // Zoom Controls for Diagram
+    let currentScale = 1.0;
+    const diagramImg = document.getElementById('diagram-img');
+
+    function zoomDiagram(factor) {
+      currentScale *= factor;
+      currentScale = Math.min(Math.max(currentScale, 0.5), 3.0);
+      diagramImg.style.transform = `scale(${currentScale})`;
+    }
+
+    function resetZoom() {
+      currentScale = 1.0;
+      diagramImg.style.transform = 'scale(1.0)';
+    }
+
+    function toggleFullscreen() {
+      const elem = document.getElementById('viewport');
+      if (!document.fullscreenElement) {
+        elem.requestFullscreen().catch(err => {
+          alert(`Error attempting to enable full-screen mode: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Copy Mermaid Source
+    function copyMermaid() {
+      const code = document.getElementById('mermaid-code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const btnText = document.getElementById('copy-btn-text');
+        btnText.textContent = 'Copied to Clipboard!';
+        setTimeout(() => { btnText.textContent = 'Copy Mermaid Code'; }, 2000);
+      });
+    }
+
+    // Restore user theme preference if stored
+    (function initTheme() {
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+        if (saved === 'light') {
+          document.getElementById('theme-icon').textContent = '🌙';
+          document.getElementById('theme-text').textContent = 'Dark';
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
